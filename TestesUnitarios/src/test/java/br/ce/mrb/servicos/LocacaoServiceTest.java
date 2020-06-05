@@ -1,14 +1,16 @@
 package br.ce.mrb.servicos;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.Date;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
 import br.ce.mrb.entidades.Filme;
 import br.ce.mrb.entidades.Locacao;
 import br.ce.mrb.entidades.Usuario;
-import br.ce.mrb.servicos.LocacaoService;
 import br.ce.mrb.utils.DataUtils;
 
 public class LocacaoServiceTest {
@@ -24,8 +26,9 @@ public class LocacaoServiceTest {
 		Locacao  locacao = service.alugarFilme(usuario, filme);
 		
 		//verificacao
-		Assert.assertEquals(5.0D,locacao.getValor(),0.01);
-		Assert.assertTrue(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()));
-		Assert.assertTrue(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.adicionarDias(locacao.getDataLocacao(),1)));
+		Assert.assertThat(locacao.getValor(),CoreMatchers.is(5.0));
+		Assert.assertThat(locacao.getValor(),CoreMatchers.not(4.0));
+		Assert.assertThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()),CoreMatchers.is(true));
+		Assert.assertThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.adicionarDias(locacao.getDataLocacao(),1)), CoreMatchers.is(true));
 	}
 }

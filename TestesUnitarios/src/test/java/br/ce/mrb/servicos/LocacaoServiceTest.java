@@ -1,12 +1,11 @@
 package br.ce.mrb.servicos;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.Date;
 
 import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ErrorCollector;
 
 import br.ce.mrb.entidades.Filme;
 import br.ce.mrb.entidades.Locacao;
@@ -15,8 +14,12 @@ import br.ce.mrb.utils.DataUtils;
 
 public class LocacaoServiceTest {
 
+	@Rule
+	public ErrorCollector error = new ErrorCollector();
+	
+	
 	@Test
-	public  void teste() {
+	public  void testeLocacao() {
 		//cenario 
 		LocacaoService service = new LocacaoService();
 		Usuario usuario = new Usuario("Usuario 1");
@@ -26,9 +29,9 @@ public class LocacaoServiceTest {
 		Locacao  locacao = service.alugarFilme(usuario, filme);
 		
 		//verificacao
-		Assert.assertThat(locacao.getValor(),CoreMatchers.is(5.0));
-		Assert.assertThat(locacao.getValor(),CoreMatchers.not(4.0));
-		Assert.assertThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()),CoreMatchers.is(true));
-		Assert.assertThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.adicionarDias(locacao.getDataLocacao(),1)), CoreMatchers.is(true));
+		error.checkThat(locacao.getValor(),CoreMatchers.equalTo(4.0));
+//		Assert.assertThat(locacao.getValor(),CoreMatchers.not(4.0));
+		error.checkThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()),CoreMatchers.is(false));
+		error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.adicionarDias(locacao.getDataLocacao(),1)), CoreMatchers.is(true));
 	}
 }

@@ -7,15 +7,26 @@ import java.util.Date;
 import br.ce.mrb.entidades.Filme;
 import br.ce.mrb.entidades.Locacao;
 import br.ce.mrb.entidades.Usuario;
+import br.ce.mrb.exceptions.FilmeSemEstoqueException;
+import br.ce.mrb.exceptions.LocadoraException;
 
 public class LocacaoService {
 	
 	
-	public Locacao alugarFilme(Usuario usuario, Filme filme) throws Exception {
+	public Locacao alugarFilme(Usuario usuario, Filme filme) throws FilmeSemEstoqueException, LocadoraException {
 		
-		if(filme.getEstoque()==0) {
-			throw new Exception("Não tem filme no estoque");
+		if(usuario==null ) {
+			throw new LocadoraException("Usuario Vazio");
 		}
+		
+		if(filme == null) {
+			throw new LocadoraException("Filme Vazio");
+		}
+
+		if(filme.getEstoque()==0) {
+			throw new FilmeSemEstoqueException();
+		}
+		
 		
 		Locacao locacao = new Locacao();
 		locacao.setFilme(filme);

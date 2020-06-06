@@ -3,7 +3,11 @@ package br.ce.mrb.servicos;
 import java.util.Date;
 
 import org.hamcrest.CoreMatchers;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -18,19 +22,36 @@ import br.ce.mrb.utils.DataUtils;
 
 public class LocacaoServiceTest {
 
+	private LocacaoService service;
+	private static int contador;
+	//definição do cotador
+	
 	@Rule
 	public ErrorCollector error = new ErrorCollector();
 	
 	@Rule
 	public ExpectedException exception = ExpectedException.none(); 
 	
+	
+	@Before
+	public void setUp() {
+		service = new LocacaoService();
+		contador++;
+		System.out.println(contador);
+	}
+	
+	
+	
+	
 	@Test
 	public  void testeLocacao() throws Exception {
 		//cenario 
-		LocacaoService service = new LocacaoService();
+		
 		Usuario usuario = new Usuario("Usuario 1");
 		Filme filme = new Filme("Filme 1",2,5.0);
 	
+		System.out.println("Teste!");
+		
 		//acao
 		Locacao locacao = service.alugarFilme(usuario, filme);
 		error.checkThat(locacao.getValor(),CoreMatchers.equalTo(5.0));
@@ -46,7 +67,7 @@ public class LocacaoServiceTest {
 	@Test(expected = FilmeSemEstoqueException.class)
 	public void testeLocacao_filmeSemEstoque() throws Exception {
 		//cenario 
-		LocacaoService service = new LocacaoService();
+		
 		Usuario usuario = new Usuario("Usuario 1");
 		Filme filme = new Filme("Filme 1",0,5.0);
 	
@@ -58,7 +79,7 @@ public class LocacaoServiceTest {
 	@Test
 	public void testeLocacao_usuarioVazio() throws FilmeSemEstoqueException{
 		//cenario 
-		LocacaoService service = new LocacaoService();
+		
 		Usuario usuario =null;
 		Filme filme = new Filme("Filme 1",2,5.0);
 	
@@ -77,7 +98,7 @@ public class LocacaoServiceTest {
 	@Test
 	public void testeLocacao_filmeVazio() throws FilmeSemEstoqueException, LocadoraException{
 		//cenario 
-		LocacaoService service = new LocacaoService();
+		
 		Usuario usuario = new Usuario("Usuario 1");
 		Filme filme = null;
 	

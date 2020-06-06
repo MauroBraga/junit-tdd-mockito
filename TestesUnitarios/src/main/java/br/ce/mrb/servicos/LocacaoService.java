@@ -11,7 +11,12 @@ import br.ce.mrb.entidades.Usuario;
 public class LocacaoService {
 	
 	
-	public Locacao alugarFilme(Usuario usuario, Filme filme) {
+	public Locacao alugarFilme(Usuario usuario, Filme filme) throws Exception {
+		
+		if(filme.getEstoque()==0) {
+			throw new Exception("Não tem filme no estoque");
+		}
+		
 		Locacao locacao = new Locacao();
 		locacao.setFilme(filme);
 		locacao.setUsuario(usuario);

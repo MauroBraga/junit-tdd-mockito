@@ -1,6 +1,8 @@
 package br.ce.mrb.servicos;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.After;
@@ -49,11 +51,12 @@ public class LocacaoServiceTest {
 		
 		Usuario usuario = new Usuario("Usuario 1");
 		Filme filme = new Filme("Filme 1",2,5.0);
+		List<Filme> filmes = Arrays.asList(filme);
 	
 		System.out.println("Teste!");
 		
 		//acao
-		Locacao locacao = service.alugarFilme(usuario, filme);
+		Locacao locacao = service.alugarFilme(usuario, filmes);
 		error.checkThat(locacao.getValor(),CoreMatchers.equalTo(5.0));
 //		Assert.assertThat(locacao.getValor(),CoreMatchers.not(4.0));
 		error.checkThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()),CoreMatchers.is(true));
@@ -70,9 +73,9 @@ public class LocacaoServiceTest {
 		
 		Usuario usuario = new Usuario("Usuario 1");
 		Filme filme = new Filme("Filme 1",0,5.0);
-	
+		List<Filme> filmes = Arrays.asList(filme);
 		//acao
-		Locacao locacao = service.alugarFilme(usuario, filme);
+		Locacao locacao = service.alugarFilme(usuario, filmes);
 	}
 	
 	
@@ -82,10 +85,10 @@ public class LocacaoServiceTest {
 		
 		Usuario usuario =null;
 		Filme filme = new Filme("Filme 1",2,5.0);
-	
+		List<Filme> filmes = Arrays.asList(filme);
 		//acao
 		try {
-			service.alugarFilme(usuario, filme);
+			service.alugarFilme(usuario, filmes);
 			Assert.fail();
 		} catch (LocadoraException e) {
 			Assert.assertThat(e.getMessage(), CoreMatchers.is("Usuario Vazio"));
@@ -100,12 +103,12 @@ public class LocacaoServiceTest {
 		//cenario 
 		
 		Usuario usuario = new Usuario("Usuario 1");
-		Filme filme = null;
-	
+		
+		List<Filme> filmes = null;
 		exception.expect(LocadoraException.class);
 		exception.expectMessage("Filme Vazio");
 		//acao
-		service.alugarFilme(usuario, filme);
+		service.alugarFilme(usuario, filmes);
 		
 		System.out.println("Forma Nova");
 		

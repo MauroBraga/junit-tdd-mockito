@@ -6,11 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.hamcrest.CoreMatchers;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -40,7 +38,7 @@ public class LocacaoServiceTest {
 	public void setUp() {
 		service = new LocacaoService();
 		contador++;
-		System.out.println(contador);
+		
 	}
 	
 	
@@ -48,13 +46,15 @@ public class LocacaoServiceTest {
 	
 	@Test
 	public  void deveAlugarFilme() throws Exception {
+		
+		Assume.assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
 		//cenario 
 		
 		Usuario usuario = new Usuario("Usuario 1");
 		Filme filme = new Filme("Filme 1",2,5.0);
 		List<Filme> filmes = Arrays.asList(filme);
 	
-		System.out.println("Teste!");
+		
 		
 		//acao
 		Locacao locacao = service.alugarFilme(usuario, filmes);
@@ -94,7 +94,7 @@ public class LocacaoServiceTest {
 		} catch (LocadoraException e) {
 			Assert.assertThat(e.getMessage(), CoreMatchers.is("Usuario Vazio"));
 		} 
-		System.out.println("Forma Robusta");
+		
 	}
 	
 	
@@ -111,7 +111,7 @@ public class LocacaoServiceTest {
 		//acao
 		service.alugarFilme(usuario, filmes);
 		
-		System.out.println("Forma Nova");
+		
 		
 	}
 	
@@ -195,6 +195,8 @@ public class LocacaoServiceTest {
 	
 	@Test
 	public void naoDeveDevolverFilmeNoDomingo() throws FilmeSemEstoqueException, LocadoraException {
+		Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
+		
 		//cenario
 		Usuario usuario = new Usuario("Usuario 1");
 		Filme filme = new Filme("Filme 1",2,4.0);

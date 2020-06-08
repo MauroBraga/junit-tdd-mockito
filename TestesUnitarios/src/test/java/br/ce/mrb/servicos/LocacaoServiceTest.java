@@ -1,5 +1,8 @@
 package br.ce.mrb.servicos;
 
+import static br.ce.mrb.matchers.MatchersProprios.*;
+import static org.junit.Assert.assertThat;
+
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -60,9 +63,10 @@ public class LocacaoServiceTest {
 		Locacao locacao = service.alugarFilme(usuario, filmes);
 		error.checkThat(locacao.getValor(),CoreMatchers.equalTo(5.0));
 //		Assert.assertThat(locacao.getValor(),CoreMatchers.not(4.0));
-		error.checkThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()),CoreMatchers.is(true));
-		error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.adicionarDias(locacao.getDataLocacao(),1)), CoreMatchers.is(true));
-		
+//		error.checkThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()),CoreMatchers.is(true));
+		error.checkThat(locacao.getDataRetorno(), ehHoje());
+		//error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.adicionarDias(locacao.getDataLocacao(),1)), CoreMatchers.is(true));
+		error.checkThat(locacao.getDataRetorno(),ehHojeComDiferencaDias(1));
 		
 		//verificacao
 	}
@@ -115,83 +119,9 @@ public class LocacaoServiceTest {
 		
 	}
 	
-	@Test
-	public void devePagar75PctNoFilme3() throws FilmeSemEstoqueException, LocadoraException {
-		//cenario
-		Usuario usuario = new Usuario("Usuario 1");
-		Filme filme = new Filme("Filme 1",2,4.0);
-		Filme filme2 = new Filme("Filme 2",2,4.0);
-		Filme filme3 = new Filme("Filme 3",2,4.0);
-		
-		List<Filme> filmes = Arrays.asList(filme,filme2,filme3);
-		
-		//acao
-		Locacao locacao = service.alugarFilme(usuario, filmes);
-		
-		//verificacao
-		//4+4+3
-		Assert.assertThat(locacao.getValor(), CoreMatchers.is(11.0));
-	}
 	
-	@Test
-	public void devePagar50PctNoFilme3() throws FilmeSemEstoqueException, LocadoraException {
-		//cenario
-		Usuario usuario = new Usuario("Usuario 1");
-		Filme filme = new Filme("Filme 1",2,4.0);
-		Filme filme2 = new Filme("Filme 2",2,4.0);
-		Filme filme3 = new Filme("Filme 3",2,4.0);
-		Filme filme4 = new Filme("Filme 4",2,4.0);
-		
-		List<Filme> filmes = Arrays.asList(filme,filme2,filme3,filme4);
-		
-		//acao
-		Locacao locacao = service.alugarFilme(usuario, filmes);
-		
-		//verificacao
-		//4+4+3+2
-		Assert.assertThat(locacao.getValor(), CoreMatchers.is(13.0));
-	}
 	
-	@Test
-	public void devePagar25PctNoFilme3() throws FilmeSemEstoqueException, LocadoraException {
-		//cenario
-		Usuario usuario = new Usuario("Usuario 1");
-		Filme filme = new Filme("Filme 1",2,4.0);
-		Filme filme2 = new Filme("Filme 2",2,4.0);
-		Filme filme3 = new Filme("Filme 3",2,4.0);
-		Filme filme4 = new Filme("Filme 4",2,4.0);
-		Filme filme5 = new Filme("Filme 5",2,4.0);
-		
-		List<Filme> filmes = Arrays.asList(filme,filme2,filme3,filme4,filme5);
-		
-		//acao
-		Locacao locacao = service.alugarFilme(usuario, filmes);
-		
-		//verificacao
-		//4+4+3+2+1 = 14
-		Assert.assertThat(locacao.getValor(), CoreMatchers.is(14.0));
-	}
 	
-	@Test
-	public void devePagar0PctNoFilme3() throws FilmeSemEstoqueException, LocadoraException {
-		//cenario
-		Usuario usuario = new Usuario("Usuario 1");
-		Filme filme = new Filme("Filme 1",2,4.0);
-		Filme filme2 = new Filme("Filme 2",2,4.0);
-		Filme filme3 = new Filme("Filme 3",2,4.0);
-		Filme filme4 = new Filme("Filme 4",2,4.0);
-		Filme filme5 = new Filme("Filme 5",2,4.0);
-		Filme filme6 = new Filme("Filme 6",2,4.0);
-		
-		List<Filme> filmes = Arrays.asList(filme,filme2,filme3,filme4,filme5, filme6);
-		
-		//acao
-		Locacao locacao = service.alugarFilme(usuario, filmes);
-		
-		//verificacao
-		//4+4+3+2+1 = 14
-		Assert.assertThat(locacao.getValor(), CoreMatchers.is(14.0));
-	}
 	
 	@Test
 	public void naoDeveDevolverFilmeNoDomingo() throws FilmeSemEstoqueException, LocadoraException {
@@ -209,6 +139,9 @@ public class LocacaoServiceTest {
 		boolean ehSegunda = DataUtils.verificarDiaSemana(locacao.getDataLocacao(), Calendar.MONDAY);
 		
 		Assert.assertTrue(ehSegunda);
+		//assertThat(locacao.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
+//		assertThat(locacao.getDataRetorno(),caiEm(Calendar.MONDAY));
+		assertThat(locacao.getDataRetorno(),caiNumaSegunda());
 	}
 	
 }

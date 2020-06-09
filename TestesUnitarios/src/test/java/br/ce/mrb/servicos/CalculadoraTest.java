@@ -57,6 +57,20 @@ public class CalculadoraTest {
 		
 	}
 	
+	@Test
+	public void divide() throws NaoPodeDividirPorZeroException {
+		//cenario 
+		String a = "6";
+		String b = "3";
+		
+		//acao
+		int resultado = calculadora.divide(a,b);
+				
+		//verificacao
+		Assert.assertEquals(resultado, 2);
+		
+	}
+	
 	@Test(expected=NaoPodeDividirPorZeroException.class)
 	public void deveLacarExcecaoAoDividirPorZero() throws NaoPodeDividirPorZeroException {
 		int a = 6;
@@ -64,4 +78,8 @@ public class CalculadoraTest {
 		//acao
 		int resultado = calculadora.divide(a,b);
 	}
+	
+	
+	
+	
 }

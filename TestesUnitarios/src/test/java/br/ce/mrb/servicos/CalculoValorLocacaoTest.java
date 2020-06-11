@@ -16,6 +16,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 import br.ce.mrb.builders.FilmeBuilder;
 import br.ce.mrb.builders.UsuarioBuilder;
+import br.ce.mrb.daos.LocacaoDaoFake;
 import br.ce.mrb.entidades.Filme;
 import br.ce.mrb.entidades.Locacao;
 import br.ce.mrb.entidades.Usuario;
@@ -59,7 +60,9 @@ public class CalculoValorLocacaoTest {
 	@Before
 	public void setUp() {
 		service = new LocacaoService();
+		service.setLocacaoDAO(new LocacaoDaoFake());
 	}
+	
 	
 	@Test
 	public void deveCalcularValorLocacaoConsiderandoDescontos() throws FilmeSemEstoqueException, LocadoraException {

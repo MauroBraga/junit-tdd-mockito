@@ -19,6 +19,8 @@ import org.junit.rules.ExpectedException;
 
 import br.ce.mrb.builders.FilmeBuilder;
 import br.ce.mrb.builders.UsuarioBuilder;
+import br.ce.mrb.daos.LocacaoDAO;
+import br.ce.mrb.daos.LocacaoDaoFake;
 import br.ce.mrb.entidades.Filme;
 import br.ce.mrb.entidades.Locacao;
 import br.ce.mrb.entidades.Usuario;
@@ -42,6 +44,7 @@ public class LocacaoServiceTest {
 	@Before
 	public void setUp() {
 		service = new LocacaoService();
+		service.setLocacaoDAO(new LocacaoDaoFake());	
 		contador++;
 		
 	}

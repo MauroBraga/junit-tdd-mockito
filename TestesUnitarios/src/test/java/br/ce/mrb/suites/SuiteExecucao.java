@@ -10,12 +10,12 @@ import br.ce.mrb.servicos.CalculadoraTest;
 import br.ce.mrb.servicos.CalculoValorLocacaoTest;
 import br.ce.mrb.servicos.LocacaoServiceTest;
 
-@RunWith(Suite.class)
-@SuiteClasses({
-	CalculadoraTest.class,
-	CalculoValorLocacaoTest.class,
-	LocacaoServiceTest.class
-})
+//@RunWith(Suite.class)
+//@SuiteClasses({
+//	CalculadoraTest.class,
+//	CalculoValorLocacaoTest.class,
+//	LocacaoServiceTest.class
+//})
 public class SuiteExecucao {
 
 	//Remova se puder

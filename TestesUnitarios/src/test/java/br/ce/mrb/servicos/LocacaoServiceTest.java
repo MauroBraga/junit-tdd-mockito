@@ -16,6 +16,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 
 import br.ce.mrb.builders.FilmeBuilder;
 import br.ce.mrb.builders.UsuarioBuilder;
@@ -44,7 +45,8 @@ public class LocacaoServiceTest {
 	@Before
 	public void setUp() {
 		service = new LocacaoService();
-		service.setLocacaoDAO(new LocacaoDaoFake());	
+//		service.setLocacaoDAO(new LocacaoDaoFake());	
+		service.setLocacaoDAO(Mockito.mock(LocacaoDAO.class)); 
 		contador++;
 		
 	}

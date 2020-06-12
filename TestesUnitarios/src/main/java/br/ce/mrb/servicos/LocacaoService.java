@@ -17,8 +17,10 @@ import br.ce.mrb.utils.DataUtils;
 public class LocacaoService {
 	
 	private LocacaoDAO dao;
+	private SPCService spcService;
 	
 	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws FilmeSemEstoqueException, LocadoraException {
+		
 		
 		if(usuario==null ) {
 			throw new LocadoraException("Usuario Vazio");
@@ -35,6 +37,9 @@ public class LocacaoService {
 			}
 		}
 		
+		if(spcService.possuiNegativacao(usuario)) {
+			throw new LocadoraException("Usuario Negativado");
+		}
 		
 		Locacao locacao = new Locacao();
 		locacao.setFilmes(filmes);
@@ -77,6 +82,10 @@ public class LocacaoService {
 
 	public void setLocacaoDAO(LocacaoDAO dao) {
 		this.dao =dao;
+	}
+	
+	public void setSpcService(SPCService spcService) {
+		this.spcService =spcService;
 	}
 	
 }

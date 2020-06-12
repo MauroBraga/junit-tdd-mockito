@@ -32,6 +32,9 @@ import br.ce.mrb.utils.DataUtils;
 public class LocacaoServiceTest {
 
 	private LocacaoService service;
+	private SPCService spcService ;
+	private LocacaoDAO locacaoDAO;
+	
 	private static int contador;
 	//definição do cotador
 	
@@ -46,7 +49,10 @@ public class LocacaoServiceTest {
 	public void setUp() {
 		service = new LocacaoService();
 //		service.setLocacaoDAO(new LocacaoDaoFake());	
+		locacaoDAO = Mockito.mock(LocacaoDAO.class);
 		service.setLocacaoDAO(Mockito.mock(LocacaoDAO.class)); 
+		spcService =Mockito.mock(SPCService.class);
+		service.setSpcService(spcService);
 		contador++;
 		
 	}
@@ -149,6 +155,22 @@ public class LocacaoServiceTest {
 		//assertThat(locacao.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
 //		assertThat(locacao.getDataRetorno(),caiEm(Calendar.MONDAY));
 		assertThat(locacao.getDataRetorno(),caiNumaSegunda());
+	}
+	
+	@Test
+	public void naoDeveAlugarFilmeParaNegativadoSPC() throws FilmeSemEstoqueException, LocadoraException {
+		//cenario
+		//Usuario usuario2 = UsuarioBuilder.umUsuario().agora();
+		Usuario usuario = UsuarioBuilder.umUsuario().comNome("Mauro").agora();
+		List<Filme> filmes = Arrays.asList(FilmeBuilder.umFilme().agora());
+		
+		Mockito.when(spcService.possuiNegativacao(usuario)).thenReturn(true);
+		
+		exception.expect(LocadoraException.class);
+		exception.expectMessage("Usuario Negativado");
+		
+		//acao
+		service.alugarFilme(usuario, filmes);
 	}
 	
 }

@@ -64,6 +64,7 @@ public class CalculoValorLocacaoTest {
 		service = new LocacaoService();
 //		service.setLocacaoDAO(new LocacaoDaoFake());
 		service.setLocacaoDAO(Mockito.mock(LocacaoDAO.class));
+		service.setSpcService(Mockito.mock(SPCService.class));
 	}
 	
 	

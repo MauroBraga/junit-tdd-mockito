@@ -28,7 +28,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import br.ce.mrb.daos.LocacaoDAO;
 import br.ce.mrb.entidades.Filme;
@@ -43,10 +46,14 @@ import br.ce.mrb.utils.DataUtils;
 
 public class LocacaoServiceTest {
 
+	@InjectMocks
 	private LocacaoService service;
 	
+	@Mock
 	private SPCService spc;
+	@Mock
 	private LocacaoDAO dao;
+	@Mock
 	private EmailService email;
 	
 	@Rule
@@ -57,13 +64,8 @@ public class LocacaoServiceTest {
 	
 	@Before
 	public void setup(){
-		service = new LocacaoService();
-		dao = Mockito.mock(LocacaoDAO.class);
-		service.setLocacaoDAO(dao);
-		spc = Mockito.mock(SPCService.class);
-		service.setSPCService(spc);
-		email = Mockito.mock(EmailService.class);
-		service.setEmailService(email);
+		MockitoAnnotations.initMocks(this); 
+
 	}
 	
 	@Test
@@ -136,7 +138,7 @@ public class LocacaoServiceTest {
 	}
 	
 	@Test
-	public void naoDeveAlugarFilmeParaNegativadoSPC() throws FilmeSemEstoqueException {
+	public void naoDeveAlugarFilmeParaNegativadoSPC() throws Exception {
 		//cenario
 		Usuario usuario = umUsuario().agora();
 		List<Filme> filmes = Arrays.asList(umFilme().agora());
@@ -180,4 +182,23 @@ public class LocacaoServiceTest {
 		
 		Mockito.verifyNoMoreInteractions(email);
 	}
+	
+	
+	public void deveTratarErronoSPC() throws Exception {
+		//cenario
+		Usuario usuario = umUsuario().agora();
+		List<Filme> filmes = Arrays.asList(umFilme().agora());
+		
+		when(spc.possuiNegativacao(usuario)).thenThrow(new Exception("Falha Catastrofica"));
+		
+		//acao
+		exception.expect(LocadoraException.class);
+		//exception.expectMessage("Falha Catastrofica");
+		exception.expectMessage("Problemas com SPC, tente novamente");
+		
+		//verificacao
+		service.alugarFilme(usuario, filmes);
+		
+	}
+	
 }

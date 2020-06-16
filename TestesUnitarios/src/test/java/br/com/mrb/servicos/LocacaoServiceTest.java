@@ -23,6 +23,8 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -42,11 +44,9 @@ import br.com.mrb.entidades.Locacao;
 import br.com.mrb.entidades.Usuario;
 import br.com.mrb.exceptions.FilmeSemEstoqueException;
 import br.com.mrb.exceptions.LocadoraException;
-import br.com.mrb.servicos.EmailService;
-import br.com.mrb.servicos.LocacaoService;
-import br.com.mrb.servicos.SPCService;
 import br.com.mrb.utils.DataUtils;
 
+//@RunWith(ParallelRunner.class)
 public class LocacaoServiceTest {
 
 	@InjectMocks @Spy
@@ -68,6 +68,18 @@ public class LocacaoServiceTest {
 	@Before
 	public void setup(){
 		MockitoAnnotations.initMocks(this);
+		System.out.println("Iniciando 2...");
+		CalculadoraTest.ordem.append("2");
+	}
+	
+	@After
+	public void tearDown(){
+		System.out.println("finalizando 2...");
+	}
+	
+	@AfterClass
+	public static void tearDownClass(){
+		System.out.println(CalculadoraTest.ordem.toString());
 	}
 	
 	@Test

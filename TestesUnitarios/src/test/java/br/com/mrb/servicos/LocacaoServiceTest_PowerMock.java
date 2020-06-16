@@ -10,10 +10,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -23,7 +24,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -34,9 +34,6 @@ import br.com.mrb.daos.LocacaoDAO;
 import br.com.mrb.entidades.Filme;
 import br.com.mrb.entidades.Locacao;
 import br.com.mrb.entidades.Usuario;
-import br.com.mrb.servicos.EmailService;
-import br.com.mrb.servicos.LocacaoService;
-import br.com.mrb.servicos.SPCService;
 import br.com.mrb.utils.DataUtils;
 
 @RunWith(PowerMockRunner.class)
@@ -63,6 +60,18 @@ public class LocacaoServiceTest_PowerMock {
 	public void setup(){
 		MockitoAnnotations.initMocks(this);
 		service = PowerMockito.spy(service);
+		System.out.println("Iniciando 4...");
+		CalculadoraTest.ordem.append(4);
+	}
+	
+	@After
+	public void tearDown(){
+		System.out.println("finalizando 4...");
+	}
+	
+	@AfterClass
+	public static void tearDownClass(){
+		System.out.println(CalculadoraTest.ordem.toString());
 	}
 	
 	@Test

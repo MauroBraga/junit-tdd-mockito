@@ -1,0 +1,14 @@
+/media/mauro/desenvolvimento/desenvolvimento/git/java/junit-tdd-mockito/TestesUnitarios/src/main/java/br/com/mrb/exceptions/FilmeSemEstoqueException.java
+/media/mauro/desenvolvimento/desenvolvimento/git/java/junit-tdd-mockito/TestesUnitarios/src/main/java/br/com/mrb/entidades/Usuario.java
+/media/mauro/desenvolvimento/desenvolvimento/git/java/junit-tdd-mockito/TestesUnitarios/src/main/java/br/com/mrb/servicos/TimerService.java
+/media/mauro/desenvolvimento/desenvolvimento/git/java/junit-tdd-mockito/TestesUnitarios/src/main/java/br/com/mrb/exceptions/NaoPodeDividirPorZeroException.java
+/media/mauro/desenvolvimento/desenvolvimento/git/java/junit-tdd-mockito/TestesUnitarios/src/main/java/br/com/mrb/entidades/Filme.java
+/media/mauro/desenvolvimento/desenvolvimento/git/java/junit-tdd-mockito/TestesUnitarios/src/main/java/br/com/mrb/daos/LocacaoDAO.java
+/media/mauro/desenvolvimento/desenvolvimento/git/java/junit-tdd-mockito/TestesUnitarios/src/main/java/br/com/mrb/exceptions/LocadoraException.java
+/media/mauro/desenvolvimento/desenvolvimento/git/java/junit-tdd-mockito/TestesUnitarios/src/main/java/br/com/mrb/servicos/Calculadora.java
+/media/mauro/desenvolvimento/desenvolvimento/git/java/junit-tdd-mockito/TestesUnitarios/src/main/java/br/com/mrb/servicos/EmailService.java
+/media/mauro/desenvolvimento/desenvolvimento/git/java/junit-tdd-mockito/TestesUnitarios/src/main/java/br/com/mrb/utils/DataUtils.java
+/media/mauro/desenvolvimento/desenvolvimento/git/java/junit-tdd-mockito/TestesUnitarios/src/main/java/br/com/mrb/servicos/SPCService.java
+/media/mauro/desenvolvimento/desenvolvimento/git/java/junit-tdd-mockito/TestesUnitarios/src/main/java/br/com/mrb/entidades/Locacao.java
+/media/mauro/desenvolvimento/desenvolvimento/git/java/junit-tdd-mockito/TestesUnitarios/src/main/java/br/com/mrb/daos/LocacaoDAOFake.java
+/media/mauro/desenvolvimento/desenvolvimento/git/java/junit-tdd-mockito/TestesUnitarios/src/main/java/br/com/mrb/servicos/LocacaoService.java
